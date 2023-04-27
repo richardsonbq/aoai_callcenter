@@ -29,19 +29,23 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
     - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`.
 - [Git](https://git-scm.com/downloads)
 - [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal) available in your Azure Subscription with one of the Completions model deployed (like text-davinci-002 or text-davinci-003)
--[Azure Speech service](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/overview) available in your Azure Subscription
+- [Azure Speech service](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/overview) available in your Azure Subscription
 
 #### Deployment Steps
-- Clone the solution repository: `git clone https://github.com/richardsonbq/aoai_callcenter.git`
-- Install the requirements: `pip install -r requirements.txt`
-- Create environment variables in your local system and populate them with the corresponding values:
+1. Clone the solution repository: `git clone https://github.com/richardsonbq/aoai_callcenter.git`
+1. Install the requirements: `pip install -r requirements.txt`
+1. Create environment variables in your local system and populate them with the corresponding values:
 
-| Variable  | Description |
+| **Variable**  | **Description** |
 | --------  | -------- |
-| OPENAI_API_KEY      | Use one of the keys of your Azure OpenAI Service |
-| OPENAI_API_ENDPOINT      | The Endpoint of your Azure OpenAI Service |
+| **OPENAI_API_KEY**      | Use one of the keys of your Azure OpenAI Service |
+| **OPENAI_API_ENDPOINT**      | The Endpoint of your Azure OpenAI Service |
+| **OPENAI_API_COMPLETION_MODEL**      | Name of the GPT model that you have deployed in Azure OpenAI Service. Default: text-davinci-002 |
+| **OPENAI_API_VERSION**      | Azure OpenAI Service Completion API version. Don't change unless a new version is available. Default: 2022-06-01-preview |
+| **SPEECH_KEY**      | Use one of the keys of your Azure Speech Service |
+| **SPEECH_SERVICE_REGION**      | The Azure region your Azure Speech Service is deployed. Default: eastus |
 
-- 
+1. Finally, from the directory of the solution, start the web application by running in the terminal: `streamlit run app/app.py`
 
 #### Automated Deployment
 **Will be available soon**
