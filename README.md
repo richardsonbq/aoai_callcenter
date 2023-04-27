@@ -1,0 +1,53 @@
+# Call Center Analytics Demo - Azure Cognitive Services (Speech) with Azure OpenAI Service
+
+This sample demonstrates how to use Azure OpenAI Service to interact with audio transcriptions to analyze it, summarize, extract sentiment and even propose responses.
+
+In this demo solution, we use Speech Service (Azure Cognitive Services) to transcribe an audio input that user can upload in multiple languages, Azure OpenAI Service to interact with this transcription with several prompts (summarize the audio, extract sentiment, etc) and Speech Service to optionally synthetize an audio response.
+
+![Application Interface](docs/appui.png)
+
+You can find sample audios and prompts to test in [audio](https://github.com/richardsonbq/aoai_callcenter/tree/main/audio) folder.
+
+## Features
+
+* Multi-language: you can select which language is the action and the prompts you'll enter. The solution will give all the outputs (including audio synthetization) in this language
+* Visual interface to upload audio files, interact with it using Azure OpenAI and synthetize responses
+
+## Getting Started
+
+> **IMPORTANT:** In order to deploy and run this example, you'll need an **Azure subscription with access enabled for the Azure OpenAI service**. You can request access [here](https://aka.ms/oaiapply).
+
+> **AZURE RESOURCE COSTS** this sample will create Azure App Service that has a monthly cost.
+
+## Running the solution
+
+### How To Run Locally
+#### Prerequisites
+- [Azure Developer CLI](https://aka.ms/azure-dev/install)
+- [Python 3+](https://www.python.org/downloads/)
+    - **Important**: Python and the pip package manager must be in the path in Windows for the setup scripts to work.
+    - **Important**: Ensure you can run `python --version` from console. On Ubuntu, you might need to run `sudo apt install python-is-python3` to link `python` to `python3`.
+- [Git](https://git-scm.com/downloads)
+- [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal) available in your Azure Subscription with one of the Completions model deployed (like text-davinci-002 or text-davinci-003)
+-[Azure Speech service](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/overview) available in your Azure Subscription
+
+#### Deployment Steps
+- Clone the solution repository: `git clone https://github.com/richardsonbq/aoai_callcenter.git`
+- Install the requirements: `pip install -r requirements.txt`
+- Create environment variables in your local system and populate them with the corresponding values:
+
+| Variable  | Description |
+| --------  | -------- |
+| OPENAI_API_KEY      | Use one of the keys of your Azure OpenAI Service |
+| OPENAI_API_ENDPOINT      | The Endpoint of your Azure OpenAI Service |
+
+- 
+
+#### Automated Deployment
+**Will be available soon**
+
+
+
+
+
+
