@@ -1,0 +1,49 @@
+Demo - Contact Center Analytics
+
+English Example
+
+Example transcription of the "english_billing_process.wav" audio file: 
+Agent: Thank you for calling Claro! Who am I speaking with? Customer: Hello, my name is Peter Smith. I have a small business and have some questions about billing processing. Agent: Good morning Peter! Before we begin, may I ask some questions to better answer your questions today? Customer: Yes. Agent: In case we get disconnected, can you share your phone number and email address so we can get in touch and share additional information? Customer: Yes, my phone number is 021 99991234 and my email address is peter.smith@contoso.com Agent: May I ask where your business is located so I can answer your questions based on your location? Customer: Yes, my business is located in Dallas, state of Texas. Agent: Thank you, how can I help you today? Customer: I am relatively new to this process and currently do everything manually. Do you have any advice or tips on manual telephone billing processing? Agent: If you are a small business with few employees and have opted for manual billing, you will need to keep accurate records of employees and devices, among other details. You should also ensure that your calculations are correct and remember to submit all necessary proof on time. Customer: Thank you, that is quite helpful. Are there specific procedures I should follow? Agent: Certain aspects of billing processing are regulated by ANATEL. Some of the rules you must comply with include: Resolution number 717 and the General Telecommunications Law. Customer: That sounds very complicated. I really don't feel like managing all of this. Agent: If you would like, I can transfer you to one of our specialized agents who can talk to you about billing service providers who will help you manage all of this. Customer: Alright, thank you very much for all your help.
+
+*******************************************************************************
+1) Summarization:
+Summarize this call.
+
+2) Information extraction:
+Extract the following from the conversation:
+1. Customer's Name
+2. Customer's Contact Phone
+3. Customer's Email
+4. Customer's Location
+5. Main reason for the conversation
+6. Customer's sentiment
+7. How the agent handled the conversation
+8. What was the FINAL outcome of the conversation
+9. Create a brief summary of the conversation
+
+3) Information extraction:
+Extract the following from the conversation:
+1. Customer's Name
+2. Customer's Contact Phone
+3. Customer's Email
+4. Customer's Location
+5. Main reason for the conversation
+6. Customer's sentiment
+7. How the agent handled the conversation
+8. What was the FINAL outcome of the conversation
+9. Create a brief summary of the conversation
+
+Make sure fields 1 to 9 are answered in a short and direct manner.
+For the phone, use the format (DDD) DDDD-DDDD.
+For location, write only the name of the city and the state abbreviation.
+For sentiment, use Positive, Neutral, or Negative.
+Format the output as a JSON object called "conversation".
+
+
+4) Text generation
+Generate a formal response for the customer:
+- Offer help at help@telco.com
+- Apologize whenever possible
+- Show that you understood the customer's request
+- Inform operating hours (Monday to Friday 9-18)
+Send in letter format.
