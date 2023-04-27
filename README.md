@@ -43,6 +43,7 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
     | **OPENAI_API_ENDPOINT**      | The Endpoint of your Azure OpenAI Service |
     | **OPENAI_API_COMPLETION_MODEL**      | Name of the GPT model that you have deployed in Azure OpenAI Service. Default: text-davinci-002 |
     | **OPENAI_API_VERSION**      | Azure OpenAI Service Completion API version. Don't change unless a new version is available. Default: 2022-06-01-preview |
+    
     ![OpenAI](docs/var_openai.png)
     ![OpenAI](docs/var_openaimodel.png)
 
@@ -52,6 +53,7 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
     | --------  | -------- |
     | **SPEECH_KEY**      | Use one of the keys of your Azure Speech Service |
     | **SPEECH_SERVICE_REGION**      | The Azure region your Azure Speech Service is deployed. Default: eastus |
+    
     ![Speech](docs/var_speech.png)
 
 
