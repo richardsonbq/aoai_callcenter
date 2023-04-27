@@ -35,6 +35,7 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
 1. Clone the solution repository: `git clone https://github.com/richardsonbq/aoai_callcenter.git`
 1. Install the requirements: `pip install -r requirements.txt`
 1. Create environment variables in your local system and populate them:
+    
     1. **Azure OpenAI Service**
 
     | **Variable**  | **Description** |
@@ -49,6 +50,7 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
 
     
     1. **Azure Speech Service**
+
     | **Variable**  | **Description** |
     | --------  | -------- |
     | **SPEECH_KEY**      | Use one of the keys of your Azure Speech Service |
