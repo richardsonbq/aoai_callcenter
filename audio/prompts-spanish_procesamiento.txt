@@ -1,0 +1,48 @@
+Demo - Contact Center Analytics
+
+Spanish Example
+
+XXX
+
+*******************************************************************************
+1) Resumen:
+Resumir esta llamada. 
+
+2) Extracción de información:
+Extraer lo siguiente de la conversación:
+1. Nombre del cliente
+2. Teléfono de contacto del cliente
+3. Correo electrónico del cliente
+4. Ubicación del cliente
+5. Razón principal de la conversación
+6. Sentimiento del cliente
+7. Cómo el agente manejó la conversación
+8. Cuál fue el resultado FINAL de la conversación
+9. Crear un breve resumen de la conversación 
+
+3) Extracción de información:
+Extraer lo siguiente de la conversación:
+1. Nombre del cliente
+2. Teléfono de contacto del cliente
+3. Correo electrónico del cliente
+4. Ubicación del cliente
+5. Razón principal de la conversación
+6. Sentimiento del cliente
+7. Cómo el agente manejó la conversación
+8. Cuál fue el resultado FINAL de la conversación
+9. Crear un breve resumen de la conversación 
+
+Asegúrese de que los campos del 1 al 9 se respondan de manera breve y directa.
+Para el teléfono, use el formato (DDD) DDDD-DDDD.
+Para la ubicación, escriba solo el nombre de la ciudad y la abreviatura del departamento.
+Para el sentimiento, use Positivo, Neutral o Negativo.
+Formatee la salida como un objeto JSON llamado "conversation". 
+
+4) Generación de respuesta
+Escriba una respuesta formal para ser enviada al cliente a partir de la conversación en la llamada. Instrucciones:
+No ofrezca transferir al usuario, incluya solo el correo electrónico de contacto (help@claro.com) y el teléfono (0800-876543).
+Pida disculpas siempre que sea posible.
+Muestre que entendió la solicitud del cliente.
+Informe el horario de atención (de lunes a viernes de 9 a 18).
+La respuesta debe ser escrita siguiendo el formato de una carta.
+No incluya la conversación de la llamada original en la respuesta.
