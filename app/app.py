@@ -27,7 +27,7 @@ languages = {
 #Define the voices for synthesizing the responses. You can add/customize voices here if needed
 voices = {  
     "English": "en-US-JessaNeural",  
-    "Spanish": "es-ES-LauraNeural",  
+    "Spanish": "es-ES-AlvaroNeural",  
     "Portuguese": "pt-BR-AntonioNeural" 
 }
 
@@ -127,7 +127,7 @@ with st.sidebar:
             temp_file_path = temp_file.name  
     
         with st.spinner("Transcribing audio..."):  
-            st.session_state.transcript = recognize_speech_from_file(temp_file_path, SPEECH_KEY, SPEECH_SERVICE_REGION, languages[selected_language])  
+            st.session_state.transcript = recognize_speech_from_file(temp_file_path, SPEECH_KEY, SPEECH_SERVICE_REGION, languages[selected_language]) 
             
         # Remove the temporary file after processing  
         os.remove(temp_file_path)  
