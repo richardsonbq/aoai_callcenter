@@ -34,8 +34,15 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
 - [Azure Speech service](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/overview) available in your Azure Subscription
 
 #### Deployment Steps
-1. Clone the solution repository: `git clone https://github.com/richardsonbq/aoai_callcenter.git`
-1. Install the requirements: `pip install -r requirements.txt`
+1. Clone the solution repository: 
+```console
+git clone https://github.com/richardsonbq/aoai_callcenter.git
+cd aoai_callcenter
+```
+1. Install the requirements: 
+```console
+pip install -r requirements.txt
+```
 1. Create environment variables in your local system and populate them:
     
     1. **Azure OpenAI Service**
@@ -61,10 +68,14 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
     ![Speech](docs/var_speech.png)
 
 
-1. Finally, from the directory of the solution, start the web application by running in the terminal: `streamlit run app/app.py`
+1. Finally, from the directory of the solution, start the web application by running in the terminal:
+```console
+streamlit run app/app.py
+```
 
 #### Automated Deployment
-**Will be available soon**
+This is still under development. Any contribution is appreciated!
+![Deploy to Azure](https://aka.ms/deploytoazurebutton)(https://azuredeploy.net)
 
 
 
