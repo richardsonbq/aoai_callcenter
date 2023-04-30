@@ -1,125 +1,185 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "webAppName": {
-        "type": "string",
-        "defaultValue": "[concat('webApp-', uniqueString(resourceGroup().id))]",
-        "minLength": 2,
-        "metadata": {
-          "description": "Web app name."
-        }
-      },
-      "location": {
-        "type": "string",
-        "defaultValue": "[resourceGroup().location]",
-        "metadata": {
-          "description": "Location for all resources."
-        }
-      },
-      "sku": {
-        "type": "string",
-        "allowedValues": [
-            "F1",
-            "D1",
-            "B1",
-            "B2",
-            "B3",
-            "S1",
-            "S2",
-            "S3",
-            "P1",
-            "P2",
-            "P3",
-            "P4"
-        ],
-        "defaultValue": "B1",
-        "metadata": {
-          "description": "SKU of App Service Plan."
-        }
-      },
-      "linuxFxVersion": {
-        "type": "string",
-        "defaultValue": "PYTHON|3.10",
-        "metadata": {
-          "description": "The Runtime stack of current web app"
-        }
-      },
-      "repoUrl": {
-        "type": "string",
-        "defaultValue": "https://github.com/rinascimento_microsoft/openai-lab.git",
-        "metadata": {
-          "description": "Git Repo URL"
-        }
-      },
-      "repoBranch": {
-        "type": "string",
-        "defaultValue": "main",
-        "metadata": {
-          "description": "Git Repo branch to deploy"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.16.2.56959",
+      "templateHash": "4627774991712753949"
+    }
+  },
+  "parameters": {
+    "webAppName": {
+      "type": "string",
+      "defaultValue": "[format('webApp-{0}', uniqueString(resourceGroup().id))]",
+      "maxLength": 32,
+      "minLength": 2,
+      "metadata": {
+        "description": "Web app name."
       }
     },
-    "variables": {
-      "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webAppName'))]"
+    "location": {
+      "type": "string",
+      "defaultValue": "eastus",
+      "allowedValues": [
+        "eastus",
+        "southcentral",
+        "westeurope"
+      ],
+      "metadata": {
+        "description": "Location for all resources. Ensure the region supports Azure OpenAI service."
+      }
     },
-    "resources": [
-      {
-        "type": "Microsoft.Web/serverfarms",
-        "apiVersion": "2020-06-01",
-        "name": "[variables('appServicePlanPortalName')]",
-        "location": "[parameters('location')]",
-        "sku": {
-          "name": "[parameters('sku')]"
-        },
-        "kind": "linux",
-        "properties": {
-          "reserved": true
-        }
+    "appservicesku": {
+      "type": "string",
+      "defaultValue": "B1",
+      "allowedValues": [
+        "F1",
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "metadata": {
+        "description": "SKU of App Service Plan."
+      }
+    },
+    "linuxFxVersion": {
+      "type": "string",
+      "defaultValue": "PYTHON|3.11",
+      "metadata": {
+        "description": "The Runtime stack of current web app"
+      }
+    },
+    "repoUrl": {
+      "type": "string",
+      "defaultValue": "https://github.com/rinascimento_microsoft/openai-lab.git",
+      "metadata": {
+        "description": "Git Repo URL where the code is available"
+      }
+    },
+    "repoBranch": {
+      "type": "string",
+      "defaultValue": "main",
+      "metadata": {
+        "description": "Git Repo branch to deploy"
+      }
+    },
+    "speechServiceSku": {
+      "type": "string",
+      "defaultValue": "F0",
+      "metadata": {
+        "description": "SKU of Azure Speech Service. Free (F0) tier should be fine"
+      }
+    },
+    "openAiServiceSku": {
+      "type": "string",
+      "defaultValue": "S0",
+      "metadata": {
+        "description": "SKU of Azure OpenAI Service. Currently, only S0 is available"
+      }
+    }
+  },
+  "variables": {
+    "appServicePlanPortalName": "[format('AppServicePlan-{0}', parameters('webAppName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2021-04-30",
+      "name": "[format('{0}{1}', parameters('webAppName'), uniqueString(resourceGroup().id))]",
+      "location": "[parameters('location')]",
+      "kind": "SpeechServices",
+      "sku": {
+        "name": "[parameters('speechServiceSku')]"
       },
-      {
-        "type": "Microsoft.Web/sites",
-        "apiVersion": "2020-06-01",
-        "name": "[parameters('webAppName')]",
-        "location": "[parameters('location')]",
-  
-        "dependsOn": [
-          "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
-        ],
-        "properties": {
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
-          "siteConfig": {
-            "linuxFxVersion": "[parameters('linuxFxVersion')]"
-          }
-        },
-        "resources": [
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2021-04-30",
+      "name": "[format('{0}{1}', parameters('webAppName'), uniqueString(resourceGroup().id))]",
+      "location": "[parameters('location')]",
+      "kind": "OpenAIAccount",
+      "sku": {
+        "name": "[parameters('openAiServiceSku')]"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-06-01",
+      "name": "[variables('appServicePlanPortalName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('appservicesku')]"
+      },
+      "kind": "linux",
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('webAppName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "[parameters('linuxFxVersion')]",
+          "appSettings": [
             {
-              "type": "sourcecontrols",
-              "apiVersion": "2020-06-01",
-              "name": "web",
-              "location": "[parameters('location')]",
-              "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
-              ],
-              "properties": {
-                "repoUrl": "[parameters('repoUrl')]",
-                "branch": "[parameters('repoBranch')]",
-                "isManualIntegration": true
-              }
+              "name": "OPENAI_API_KEY",
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('{0}{1}', parameters('webAppName'), uniqueString(resourceGroup().id))), '2021-04-30').key1]"
+            },
+            {
+              "name": "OPENAI_API_ENDPOINT",
+              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('{0}{1}', parameters('webAppName'), uniqueString(resourceGroup().id))), '2021-04-30').endpoint]"
+            },
+            {
+              "name": "SPEECH_API_KEY",
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('{0}{1}', parameters('webAppName'), uniqueString(resourceGroup().id))), '2021-04-30').key1]"
             }
           ]
-      },
-      {
-        "type": "Microsoft.Web/sites/config",
-        "apiVersion": "2021-03-01",
-        "name": "[concat(parameters('webAppName'), '/web')]",
-        "location": "[parameters('location')]",
-        "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
-        ],
-        "properties": {
-            "appCommandLine": "python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
         }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', format('{0}{1}', parameters('webAppName'), uniqueString(resourceGroup().id)))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', format('{0}{1}', parameters('webAppName'), uniqueString(resourceGroup().id)))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/sourcecontrols",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', parameters('webAppName'), 'web')]",
+      "properties": {
+        "repoUrl": "[parameters('repoUrl')]",
+        "branch": "[parameters('repoBranch')]",
+        "isManualIntegration": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2021-03-01",
+      "name": "[format('{0}/{1}', parameters('webAppName'), 'web')]",
+      "properties": {
+        "appCommandLine": "python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+      ]
     }
-    ]
-  }
+  ]
+}
