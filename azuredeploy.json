@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "18266609440557110445"
+      "templateHash": "5656878141039209388"
     }
   },
   "parameters": {
@@ -88,7 +88,7 @@
     }
   },
   "variables": {
-    "uuid": "[uniqueString(resourceGroup().id)]",
+    "uuid": 1,
     "uniqueName": "[format('{0}-{1}', parameters('suffix'), variables('uuid'))]",
     "appServicePlanPortalName": "[format('AppServicePlan-{0}', variables('uniqueName'))]",
     "webAppName": "[format('webapp-{0}', variables('uniqueName'))]",
