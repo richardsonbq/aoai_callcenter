@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "12652228735518007837"
+      "templateHash": "14015912871615036140"
     }
   },
   "parameters": {
@@ -60,7 +60,7 @@
     },
     "repoUrl": {
       "type": "string",
-      "defaultValue": "https://github.com/rinascimento_microsoft/openai-lab.git",
+      "defaultValue": "https://github.com/richardsonbq/aoai_callcenter.git",
       "metadata": {
         "description": "Git Repo URL where the code is available"
       }
@@ -154,6 +154,10 @@
             {
               "name": "SPEECH_API_KEY",
               "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('speechName')), '2021-04-30').key1]"
+            },
+            {
+              "name": "SPEECH_API_REGION",
+              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('speechName')), '2021-04-30', 'full').location]"
             }
           ]
         }
@@ -182,7 +186,7 @@
       "apiVersion": "2021-03-01",
       "name": "[format('{0}/{1}', variables('webAppName'), 'web')]",
       "properties": {
-        "appCommandLine": "python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
+        "appCommandLine": "/home/startup.sh python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
