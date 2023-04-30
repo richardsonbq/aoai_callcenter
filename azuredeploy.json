@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "14015912871615036140"
+      "templateHash": "14809553058551825595"
     }
   },
   "parameters": {
@@ -85,6 +85,26 @@
       "metadata": {
         "description": "SKU of Azure OpenAI Service. Currently, only S0 is available"
       }
+    },
+    "openAICompletionModel": {
+      "type": "string",
+      "defaultValue": "text-davinci-002",
+      "metadata": {
+        "description": "Model and version of the Azure OpenAI completion model to be used. Ensure the selected model is supported in the region."
+      },
+      "allowedValues": [
+        "text-curie-001",
+        "text-davinci-002",
+        "text-davinci-003",
+        "gpt-35-turbo"
+      ]
+    },
+    "openAICompletionModelName": {
+      "type": "string",
+      "defaultValue": "[parameters('openAICompletionModel')]",
+      "metadata": {
+        "description": "Name of the Azure OpenAI completion model to be used. You can customize your name or keep the suggested default"
+      }
     }
   },
   "variables": {
@@ -93,7 +113,8 @@
     "appServicePlanPortalName": "[format('AppServicePlan-{0}', variables('uniqueName'))]",
     "webAppName": "[format('webapp-{0}', variables('uniqueName'))]",
     "azopenaiName": "[format('azopenai-{0}', variables('uniqueName'))]",
-    "speechName": "[format('speech-{0}', variables('uniqueName'))]"
+    "speechName": "[format('speech-{0}', variables('uniqueName'))]",
+    "startupCommand": "/home/startup.sh \n python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
   },
   "resources": [
     {
@@ -119,6 +140,24 @@
       "properties": {
         "publicNetworkAccess": "Enabled"
       }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/deployments",
+      "apiVersion": "2022-12-01",
+      "name": "[format('{0}/{1}', variables('azopenaiName'), parameters('openAICompletionModelName'))]",
+      "properties": {
+        "model": {
+          "format": "OpenAI",
+          "name": "[parameters('openAICompletionModel')]",
+          "version": "1"
+        },
+        "scaleSettings": {
+          "scaleType": "Standard"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', variables('azopenaiName'))]"
+      ]
     },
     {
       "type": "Microsoft.Web/serverfarms",
@@ -186,7 +225,7 @@
       "apiVersion": "2021-03-01",
       "name": "[format('{0}/{1}', variables('webAppName'), 'web')]",
       "properties": {
-        "appCommandLine": "/home/startup.sh python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
+        "appCommandLine": "[variables('startupCommand')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
