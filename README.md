@@ -75,7 +75,7 @@ streamlit run app/app.py
 
 #### Automated Deployment
 This is still under development. Any contribution is appreciated!
-![Deploy to Azure](https://aka.ms/deploytoazurebutton)(https://azuredeploy.net)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https%3A%2F%2Fraw.githubusercontent.com%2Frichardsonbq%2Faoai_callcenter%2Fmain%2Fazuredeploy.json)
 
 
 
