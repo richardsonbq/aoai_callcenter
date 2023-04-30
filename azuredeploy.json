@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "7555570168434203797"
+      "templateHash": "18266609440557110445"
     }
   },
   "parameters": {
@@ -91,13 +91,15 @@
     "uuid": "[uniqueString(resourceGroup().id)]",
     "uniqueName": "[format('{0}-{1}', parameters('suffix'), variables('uuid'))]",
     "appServicePlanPortalName": "[format('AppServicePlan-{0}', variables('uniqueName'))]",
-    "webAppName": "[format('webapp-{0}', variables('uniqueName'))]"
+    "webAppName": "[format('webapp-{0}', variables('uniqueName'))]",
+    "azopenaiName": "[format('azopenai-{0}', variables('uniqueName'))]",
+    "speechName": "[format('speech-{0}', variables('uniqueName'))]"
   },
   "resources": [
     {
       "type": "Microsoft.CognitiveServices/accounts",
       "apiVersion": "2021-04-30",
-      "name": "[format('speech-{0}}}', variables('uniqueName'))]",
+      "name": "[variables('speechName')]",
       "location": "[parameters('location')]",
       "kind": "SpeechServices",
       "sku": {
@@ -108,7 +110,7 @@
     {
       "type": "Microsoft.CognitiveServices/accounts",
       "apiVersion": "2021-04-30",
-      "name": "[format('azopenai-{0}}}', variables('uniqueName'))]",
+      "name": "[variables('azopenaiName')]",
       "location": "[parameters('location')]",
       "kind": "OpenAIAccount",
       "sku": {
@@ -141,23 +143,23 @@
           "appSettings": [
             {
               "name": "OPENAI_API_KEY",
-              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', variables('uniqueName'))), '2021-04-30').key1]"
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('azopenaiName')), '2021-04-30').key1]"
             },
             {
               "name": "OPENAI_API_ENDPOINT",
-              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', variables('uniqueName'))), '2021-04-30').endpoint]"
+              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('azopenaiName')), '2021-04-30').endpoint]"
             },
             {
               "name": "SPEECH_API_KEY",
-              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('speech-{0}}}', variables('uniqueName'))), '2021-04-30').key1]"
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('speechName')), '2021-04-30').key1]"
             }
           ]
         }
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
-        "[resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', variables('uniqueName')))]",
-        "[resourceId('Microsoft.CognitiveServices/accounts', format('speech-{0}}}', variables('uniqueName')))]"
+        "[resourceId('Microsoft.CognitiveServices/accounts', variables('azopenaiName'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', variables('speechName'))]"
       ]
     },
     {
