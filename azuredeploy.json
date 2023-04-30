@@ -5,17 +5,17 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "16356838154446895982"
+      "templateHash": "7555570168434203797"
     }
   },
   "parameters": {
-    "webAppName": {
+    "suffix": {
       "type": "string",
-      "defaultValue": "[format('webApp-{0}', uniqueString(resourceGroup().id))]",
+      "defaultValue": "callcenter",
       "maxLength": 32,
       "minLength": 2,
       "metadata": {
-        "description": "Web app name."
+        "description": "Enter suffix to be included in the name of the resources."
       }
     },
     "location": {
@@ -88,13 +88,16 @@
     }
   },
   "variables": {
-    "appServicePlanPortalName": "[format('AppServicePlan-{0}', parameters('webAppName'))]"
+    "uuid": "[uniqueString(resourceGroup().id)]",
+    "uniqueName": "[format('{0}-{1}', parameters('suffix'), variables('uuid'))]",
+    "appServicePlanPortalName": "[format('AppServicePlan-{0}', variables('uniqueName'))]",
+    "webAppName": "[format('webapp-{0}', variables('uniqueName'))]"
   },
   "resources": [
     {
       "type": "Microsoft.CognitiveServices/accounts",
       "apiVersion": "2021-04-30",
-      "name": "[format('speech-{0}}}', parameters('webAppName'))]",
+      "name": "[format('speech-{0}}}', variables('uniqueName'))]",
       "location": "[parameters('location')]",
       "kind": "SpeechServices",
       "sku": {
@@ -105,7 +108,7 @@
     {
       "type": "Microsoft.CognitiveServices/accounts",
       "apiVersion": "2021-04-30",
-      "name": "[format('azopenai-{0}}}', parameters('webAppName'))]",
+      "name": "[format('azopenai-{0}}}', variables('uniqueName'))]",
       "location": "[parameters('location')]",
       "kind": "OpenAIAccount",
       "sku": {
@@ -129,7 +132,7 @@
     {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2020-06-01",
-      "name": "[parameters('webAppName')]",
+      "name": "[variables('webAppName')]",
       "location": "[parameters('location')]",
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
@@ -138,47 +141,47 @@
           "appSettings": [
             {
               "name": "OPENAI_API_KEY",
-              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', parameters('webAppName'))), '2021-04-30').key1]"
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', variables('uniqueName'))), '2021-04-30').key1]"
             },
             {
               "name": "OPENAI_API_ENDPOINT",
-              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', parameters('webAppName'))), '2021-04-30').endpoint]"
+              "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', variables('uniqueName'))), '2021-04-30').endpoint]"
             },
             {
               "name": "SPEECH_API_KEY",
-              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('speech-{0}}}', parameters('webAppName'))), '2021-04-30').key1]"
+              "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', format('speech-{0}}}', variables('uniqueName'))), '2021-04-30').key1]"
             }
           ]
         }
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
-        "[resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', parameters('webAppName')))]",
-        "[resourceId('Microsoft.CognitiveServices/accounts', format('speech-{0}}}', parameters('webAppName')))]"
+        "[resourceId('Microsoft.CognitiveServices/accounts', format('azopenai-{0}}}', variables('uniqueName')))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', format('speech-{0}}}', variables('uniqueName')))]"
       ]
     },
     {
       "type": "Microsoft.Web/sites/sourcecontrols",
       "apiVersion": "2020-06-01",
-      "name": "[format('{0}/{1}', parameters('webAppName'), 'web')]",
+      "name": "[format('{0}/{1}', variables('webAppName'), 'web')]",
       "properties": {
         "repoUrl": "[parameters('repoUrl')]",
         "branch": "[parameters('repoBranch')]",
         "isManualIntegration": true
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+        "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
       ]
     },
     {
       "type": "Microsoft.Web/sites/config",
       "apiVersion": "2021-03-01",
-      "name": "[format('{0}/{1}', parameters('webAppName'), 'web')]",
+      "name": "[format('{0}/{1}', variables('webAppName'), 'web')]",
       "properties": {
         "appCommandLine": "python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+        "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
       ]
     }
   ]
