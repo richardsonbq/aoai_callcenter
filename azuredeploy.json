@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "5656878141039209388"
+      "templateHash": "12652228735518007837"
     }
   },
   "parameters": {
@@ -112,11 +112,13 @@
       "apiVersion": "2021-04-30",
       "name": "[variables('azopenaiName')]",
       "location": "[parameters('location')]",
-      "kind": "OpenAIAccount",
+      "kind": "OpenAI",
       "sku": {
         "name": "[parameters('openAiServiceSku')]"
       },
-      "properties": {}
+      "properties": {
+        "publicNetworkAccess": "Enabled"
+      }
     },
     {
       "type": "Microsoft.Web/serverfarms",
