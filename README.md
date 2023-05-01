@@ -19,9 +19,27 @@ You can find sample audios and prompts to test in [audio](https://github.com/ric
 
 > **IMPORTANT:** In order to deploy and run this example, you'll need an **Azure subscription with access enabled for the Azure OpenAI service**. You can request access [here](https://aka.ms/oaiapply).
 
-> **AZURE RESOURCE COSTS** this sample will create Azure App Service that has a monthly cost.
+> **AZURE RESOURCE COSTS** this sample will create Azure App Service that has a monthly cost. Azure Speech Service has a default free tier (which is suggested as the default deployment option). Azure OpenAI Service depends on the usage of the solution, so you'll only be charged per the tokens of your requests (triggered by the interactions in the application).
 
 ## Running the solution
+
+
+#### Automated Deployment
+Just click on the following button and follow the instructions.
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frichardsonbq%2Faoai_callcenter%2Fmain%2Fazuredeploy.json)
+
+This option will deploy:
+- **Azure Speech Service** that will be used to transcribe an audio file and synthetize audio responses.
+- **Azure OpenAI Service** with one Completion model according to user selection in the deplyment template (default is text-davinci-002). This is the service to analyze and interact with the audio trascriptions.
+- **Azure App Service** to run the Python application (User Interface). This is a simple application that leverages [Streamlit](https://docs.streamlit.io/) as a frontend.
+- **Azure App Service Plan** to host the Python application in a dedicated Linux environment. 
+
+Ensure the deployment succeeds. Some common errors can be:
+- More than one Speech Service under free tier (F0). Change the tier before deploying (S0, for example) or delete older resources in your subscription.
+- Ensure the Azure OpenAI Service is supported in the region selected (field "Location" of the deployment template). Besides, ensure that the selected region supports the selected Completion Model. You can check model's availability [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models#model-summary-table-and-region-availability). 
+
+When the deployment succeeds, go to Azure Portal, find the App Service, go to "Overview" resource blade and click on the link in the "Default Domain" to open the application.
 
 ### How To Run Locally
 #### Prerequisites
@@ -73,11 +91,6 @@ pip install -r requirements.txt
 streamlit run app/app.py
 ```
 
-#### Automated Deployment
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frichardsonbq%2Faoai_callcenter%2Fmain%2Fazuredeploy.json)
-
-This is still under development. Any contribution is appreciated!
 
 
 
