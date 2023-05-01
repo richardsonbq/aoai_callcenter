@@ -1,6 +1,6 @@
 @description('Enter suffix to be included in the name of the resources.')
 @minLength(2)
-@maxLength(32)
+@maxLength(12)
 param suffix string = 'callcenter'
 
 @description('Location for all resources. Ensure the region supports Azure OpenAI service.')
@@ -30,7 +30,7 @@ param appservicesku string = 'B1'
 @description('The Runtime stack of current web app')
 param linuxFxVersion string = 'PYTHON|3.11'
 
-@description('Git Repo URL where the code is available')
+@description('Git Repo URL where the code is available. Use original repo or fork it and use your own.')
 param repoUrl string = 'https://github.com/richardsonbq/aoai_callcenter.git'
 
 @description('Git Repo branch to deploy')
@@ -54,16 +54,18 @@ param openAICompletionModel string = 'text-davinci-002'
 @description('Name of the Azure OpenAI completion model to be used. You can customize your name or keep the suggested default')
 param openAICompletionModelName string = openAICompletionModel
 
-var uuid = 1//uniqueString(resourceGroup().id)
+
+var uuid = uniqueString(guid(resourceGroup().id))
 var uniqueName = '${suffix}-${uuid}'
 
+//Defining the names of the resources
 var appServicePlanPortalName = 'AppServicePlan-${uniqueName}'
 var webAppName = 'webapp-${uniqueName}'
 var azopenaiName = 'azopenai-${uniqueName}'
 var speechName = 'speech-${uniqueName}'
 
 //Ensure all pre-reqs are met and start streamlit application
-var startupCommand = '/home/startup.sh \n python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0'
+var startupCommand = '/home/startup.sh\npython -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0'
 
 
 resource speechAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {  

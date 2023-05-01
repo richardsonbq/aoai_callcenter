@@ -5,14 +5,14 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "14809553058551825595"
+      "templateHash": "8817698014874707257"
     }
   },
   "parameters": {
     "suffix": {
       "type": "string",
       "defaultValue": "callcenter",
-      "maxLength": 32,
+      "maxLength": 12,
       "minLength": 2,
       "metadata": {
         "description": "Enter suffix to be included in the name of the resources."
@@ -62,7 +62,7 @@
       "type": "string",
       "defaultValue": "https://github.com/richardsonbq/aoai_callcenter.git",
       "metadata": {
-        "description": "Git Repo URL where the code is available"
+        "description": "Git Repo URL where the code is available. Use original repo or fork it and use your own."
       }
     },
     "repoBranch": {
@@ -108,13 +108,13 @@
     }
   },
   "variables": {
-    "uuid": 1,
+    "uuid": "[uniqueString(guid(resourceGroup().id))]",
     "uniqueName": "[format('{0}-{1}', parameters('suffix'), variables('uuid'))]",
     "appServicePlanPortalName": "[format('AppServicePlan-{0}', variables('uniqueName'))]",
     "webAppName": "[format('webapp-{0}', variables('uniqueName'))]",
     "azopenaiName": "[format('azopenai-{0}', variables('uniqueName'))]",
     "speechName": "[format('speech-{0}', variables('uniqueName'))]",
-    "startupCommand": "/home/startup.sh \n python -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
+    "startupCommand": "/home/startup.sh\npython -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
   },
   "resources": [
     {

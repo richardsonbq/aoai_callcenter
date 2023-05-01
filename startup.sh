@@ -1,3 +1,3 @@
-#!/bin/bash  
-apt-get update  
-apt-get install -y libasound2
+#!/bin/bash
+apt-get update
+apt-get install -y libssl-dev libasound2
