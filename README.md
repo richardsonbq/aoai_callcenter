@@ -92,5 +92,7 @@ streamlit run app/app.py
 ```
 
 ## Limitations
-
-- **Token limitation:** this solution currently doen't implement any technique for text chunking. Therefore, the number of Tokens from the Audio Transcription + User Prompt can't be greater than the maximum number of tokens of the selected completion model. You can check the updated maximum number of tokens per request [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models#gpt-3-models-1). To estimate how many tokens a sequence of characters has, you can visit this [Tokenizer](https://platform.openai.com/tokenizer). Finally, if you want to understand the concepts behind Tokens, check this [link] (https://blog.quickchat.ai/post/tokens-entropy-question/).
+#### Token limitation
+This solution currently doesn't implement any technique for text chunking. Therefore, the number of Tokens from the Audio Transcription + User Prompt can't be greater than the maximum number of tokens of the selected completion model. You can check the updated maximum number of tokens per request [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models#gpt-3-models-1).
+To estimate how many tokens a sequence of characters has, you can visit this [Tokenizer](https://platform.openai.com/tokenizer).
+Finally, if you want to understand the concepts behind Tokens, check this [link](https://blog.quickchat.ai/post/tokens-entropy-question/).
