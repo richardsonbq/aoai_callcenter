@@ -65,7 +65,7 @@ var azopenaiName = 'azopenai-${uniqueName}'
 var speechName = 'speech-${uniqueName}'
 
 //Ensure all pre-reqs are met and start streamlit application
-var startupCommand = '/home/startup.sh\npython -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0'
+var startupCommand = 'startup.sh'
 
 
 resource speechAccount 'Microsoft.CognitiveServices/accounts@2021-04-30' = {  

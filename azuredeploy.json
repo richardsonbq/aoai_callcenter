@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.16.2.56959",
-      "templateHash": "8817698014874707257"
+      "templateHash": "11461824721562053543"
     }
   },
   "parameters": {
@@ -114,7 +114,7 @@
     "webAppName": "[format('webapp-{0}', variables('uniqueName'))]",
     "azopenaiName": "[format('azopenai-{0}', variables('uniqueName'))]",
     "speechName": "[format('speech-{0}', variables('uniqueName'))]",
-    "startupCommand": "/home/startup.sh\npython -m streamlit run app/app.py --server.port 8000 --server.address 0.0.0.0"
+    "startupCommand": "startup.sh"
   },
   "resources": [
     {
