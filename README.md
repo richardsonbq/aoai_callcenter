@@ -1,6 +1,6 @@
 # Call Center Analytics Demo - Azure Cognitive Services (Speech) with Azure OpenAI Service
 
-This sample demonstrates how to use Azure OpenAI Service to interact with audio transcriptions to analyze it, summarize, extract sentiment and even propose responses.
+This sample demonstrates how to use Azure OpenAI Service to interact with an audio transcription to analyze, summarize, extract entities/sentiment and even propose responses.
 
 In this demo solution, we use Speech Service (Azure Cognitive Services) to transcribe an audio input that user can upload in multiple languages, Azure OpenAI Service to interact with this transcription with several prompts (summarize the audio, extract sentiment, etc) and Speech Service to optionally synthetize an audio response. 
 
@@ -91,9 +91,6 @@ pip install -r requirements.txt
 streamlit run app/app.py
 ```
 
+## Limitations
 
-
-
-
-
-
+- **Token limitation:** this solution currently doen't implement any technique for text chunking. Therefore, the number of Tokens from the Audio Transcription + User Prompt can't be greater than the maximum number of tokens of the selected completion model. You can check the updated maximum number of tokens per request [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models#gpt-3-models-1). To estimate how many tokens a sequence of characters has, you can visit this [Tokenizer](https://platform.openai.com/tokenizer). Finally, if you want to understand the concepts behind Tokens, check this [link] (https://blog.quickchat.ai/post/tokens-entropy-question/).
