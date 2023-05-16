@@ -5,7 +5,7 @@ This sample demonstrates how to use Azure OpenAI Service to interact with an aud
 In this demo solution, we use Speech Service (Azure Cognitive Services) to transcribe an audio input that user can upload in multiple languages, Azure OpenAI Service to interact with this transcription with several prompts (summarize the audio, extract sentiment, etc) and Speech Service to optionally synthetize an audio response. 
 
 **Solution overview:**
-![Application Interface](docs/solution_overview.png)
+![Application Interface](docs/solution_overview.jpg)
 
 You can find sample audios and prompts to test in [audio](https://github.com/richardsonbq/aoai_callcenter/tree/main/audio) folder. The application interface is as follows:
 ![Application Interface](docs/appui.png)
