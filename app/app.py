@@ -10,8 +10,8 @@ import os
 openai.api_type = "azure"
 openai.api_key = os.environ.get('OPENAI_API_KEY') 
 openai.api_base = os.environ.get('OPENAI_API_ENDPOINT') 
-openai.api_version = os.environ.get('OPENAI_API_VERSION') or "2022-06-01-preview"
-COMPLETIONS_MODEL = os.environ.get('OPENAI_API_COMPLETION_MODEL') or "text-davinci-002"
+openai.api_version = os.environ.get('OPENAI_API_VERSION') or "2023-06-01-preview"
+COMPLETIONS_MODEL = os.environ.get('OPENAI_API_COMPLETION_MODEL') or "text-davinci-003"
 
 # Initialize the parameters related to Azure Speech for text-to-speech and speech-to-text capabilities
 SPEECH_KEY = os.environ.get('SPEECH_API_KEY')
